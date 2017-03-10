@@ -9,6 +9,20 @@ $(document).ready(function(){
     var $spot7 = $(".table__cell--7");
     var $spot8 = $(".table__cell--8");
     var $spot9 = $(".table__cell--9");
+    var allSpots =  [$spot1,$spot2,$spot3,$spot4,$spot5,$spot6,$spot7,$spot8,$spot9];
+    var $selectBtnX = $(".select-player__X");
+    var $selectBtnO = $(".select-player__O");
+    var humanPlayer = "X";
+    var aiPlayer = "O";
+    
+    $selectBtnX.click(function(){
+        humanPlayer = "X";
+        aiPlayer = "O";
+    });
+    $selectBtnO.click(function(){
+        humanPlayer = "O";
+        aiPlayer = "O";
+    })
     
     function checkResult(){
         //check rows
@@ -142,15 +156,55 @@ $(document).ready(function(){
         //  return true
         //else
         //  return false
+        for(var i=0; i<allSpots.length; i++){
+          if(allSpots[i].hasClass("empty")){
+            return false;
+          }
+        }
+        return true;
     }
     
     function minimax(board,playerTurn){
+        //if in terminal state
         if(isTerminal()){
             return checkResult();
-        }else{
-            var scoreList = [];
+        }
+        //if not in terminal state
+        else{
+            var scoreList = {};
             var pickMove;
-            //for every empty spot 
+            var emptySpots = [];
+            
+            for(var i=0; i<allSpots.length; i++){
+              if(allSpots[i].hasClass("empty")){
+                emptySpots.push(allSpots[i]);
+              }
+            }
+            for(var i=0; i<emptySpots.length; i++){
+              var index = allSpots.indexOf(emptySpots[i]);
+              var newBoard = board;
+              newBoard[index].removeClass("empty");
+              scoreList[index] = minimax(newBoard,playerTurn=="X"?"O":"X");
+            }
+            var scoreListKeys = Object.keys(scoreList);
+            pickMove = scoreList[scoreListKeys[0]];
+            if(playerTurn=="X"){
+              for(var i=0; i<scoreListKeys.length; i++){
+                if(scoreList[scoreListKeys[i]] > pickMove){
+                  pickMove = scoreListKeys[i];
+                }
+              }
+            }
+            else if(playerTurn=="O"){
+                for(var i=0; i<scoreListKeys.length; i++){
+                  if(scoreList[scoreListKeys[i]] < pickMove){
+                    pickMove = scoreListKeys[i];
+                  }
+                }
+            }
+            return pickMove;
+           
+            /*for every empty spot 
             //  var index
             //  var newBoard = board
             //  newBoard[index] removeClass("empty")
@@ -160,9 +214,29 @@ $(document).ready(function(){
             //  pick highest score in scoreList
             //if playerTurn = "O"
             //  pick lowest score in scoreList
-            //return pickMove
+            //return pickMove*/
         }
     }
+    
+    function takeTurn(index,player){
+        allSpots[index].removeClass("empty");
+        allSpots[index].append(" "+player);
+    }
+    
+    $(".table__cell").click(function(){
+        var index = $(this).attr("class").match(/[1-9]/g) - 1;
+        takeTurn(index,"X");
+    })
+    
+    
+    
+
+    
+    
+    
+    /*function aiTurn(minimaxMove){
+        allSpots[minimaxMove].removeClass("empty");
+    }*/
     
     
     
