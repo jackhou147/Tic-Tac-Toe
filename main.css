@@ -1,0 +1,36 @@
+body {
+  background-color: #14BDAC;
+}
+
+table {
+  width: 40vw;
+  height: 40vw;
+  position: absolute;
+  top: calc((100vh - 40vw) / 2);
+  left: calc((100vw -  40vw) / 2);
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.table__cell--border-right {
+  border-right: 10px solid #0DA192;
+}
+
+.table__cell--border-bottom {
+  border-bottom: 10px solid #0DA192;
+}
+
+.table__cell {
+  padding: 0;
+}
+
+.table__row {
+  height: 30px;
+}
+
+
+
+
+
+
+
