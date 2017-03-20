@@ -2,6 +2,7 @@ body {
   background-color: #14BDAC;
 }
 
+/********table styling*******/
 table {
   width: 40vw;
   height: 40vw;
@@ -22,11 +23,64 @@ table {
 
 .table__cell {
   padding: 0;
+  text-align: center;
 }
 
 .table__row {
   height: 30px;
 }
+/*******\table styling*******/
+
+/********select-player styling*******/
+.select-player {
+    width: 50vw;
+    height: 5vw;
+    position: absolute;
+    left: 25vw;
+    top: 2vw;
+    display: flex;
+    justify-content:space-around;
+    cursor: pointer;
+}
+
+.select-player__X,
+.select-player__O{
+    width: 35%;
+    display: flex;
+    justify-content:space-between;
+    box-sizing: border-box;
+    padding: 0 5px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.select-player__X div,
+.select-player__O div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.select-player__X span,
+.select-player__O span{
+    max-width: 50%;
+}
+
+
+/********select-player styling*******/
+
+.restart {
+  border: 1px solid red;
+  width: 50%;
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  left: 25%;
+  cursor: pointer;
+}
+
+
 
 
 
