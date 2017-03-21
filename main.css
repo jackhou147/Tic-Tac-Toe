@@ -81,6 +81,86 @@ table {
 }
 
 
+/********winner animation*************/
+.horizontal.full-width {
+    width: 38vw;
+    
+}
+
+.horizontal {
+    position: absolute;
+    height: 10px;
+    background-color: black;
+    transition: width 0.2s ease;
+    width: 1px;
+}
+
+.vertical {
+    position: absolute;
+    width: 10px;
+    background-color: black;
+    transition: height 0.2s ease;
+    height: 1px;
+}
+
+
+.vertical.full-height {
+    height: 38vw;
+}
+
+.firstRow {
+    top: 14%;
+}
+
+.secondRow {
+    top: 48.2%;
+}
+
+.thirdRow {
+    top: 82%;
+}
+
+.firstColumn {
+    top: 5%;
+    left: 13%;
+}
+
+.secondColumn {
+    top: 5%;
+    left: 47.2%;
+}
+
+.thirdColumn {
+    top: 5%;
+    left: 82.2%;
+}
+
+.incline, .decline {
+    position: absolute;
+    width: 10px;
+    background-color: black;
+    transition: height 0.2s ease;
+    height: 5vw;
+    
+}
+
+.incline {
+    right: 0px;
+    top: 0;
+    transform: rotate(45deg);
+}
+
+.incline.full-diagonal,
+.decline.full-diagonal {
+    height: 48vw;
+    
+}
+
+
+
+
+
+
 
 
 

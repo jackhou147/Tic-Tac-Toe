@@ -26,8 +26,10 @@ $(document).ready(function(){
         aiPlayer = "O";
     })
     
+  
+    
     function checkResult(board){
-        //check rows
+          //check rows
         var checkRow = {
             checkFirstRow: function(){
                 if(board[0] !== "E" &&
@@ -116,6 +118,7 @@ $(document).ready(function(){
                 }
             }
         }
+        
         var gameScore;
         function checkWinOrDraw(){
             var checkAll = [checkRow.checkFirstRow,
@@ -223,6 +226,167 @@ $(document).ready(function(){
     
     }
         
+    function getCurrentBoard(){
+        var currentBoard = [];
+        for(var i=0; i<allSpots.length; i++){
+          if(allSpots[i].hasClass("empty")){
+              currentBoard.push("E");
+          }else{
+              currentBoard.push(allSpots[i].html());
+          }
+        }
+        return currentBoard;
+    }
+    
+    $(document).click(function(){
+        setTimeout(function(){
+            $(".table > div").addClass("full-width");
+        },20)
+    })
+    
+    
+    
+    function displayWinnerIfAny(gameScore,currentBoard){
+        function resultAnimation(winner,winningLine){
+            alert("winner: "+winner);
+            function animateWinningLine(line){
+                function animateFirstRow(){
+                    $(".table").append("<div></div>");
+                    $(".table > div").addClass("horizontal firstRow");
+                    setTimeout(function(){
+                        $(".table > div").addClass("full-width");
+                    },20)
+                };
+                function animateSecondRow(){
+                    $(".table").append("<div></div>");
+                    $(".table > div").addClass("horizontal secondRow");
+                    setTimeout(function(){
+                        $(".table > div").addClass("full-width");
+                    },20)
+                };
+                function animateThirdRow(){
+                    $(".table").append("<div></div>");
+                    $(".table > div").addClass("horizontal thirdRow");
+                    setTimeout(function(){
+                        $(".table > div").addClass("full-width");
+                    },20)
+                };
+                function animateFirstColumn(){
+                    $(".table").append("<div></div>");
+                    $(".table > div").addClass("vertical firstColumn");
+                    setTimeout(function(){
+                        $(".table > div").addClass("full-height");
+                    },20)
+                };
+                function animatesecondColumn(){
+                    $(".table").append("<div></div>");
+                    $(".table > div").addClass("vertical secondColumn");
+                    setTimeout(function(){
+                        $(".table > div").addClass("full-height");
+                    },20)
+                };
+                function animateThirdColumn(){
+                    $(".table").append("<div></div>");
+                    $(".table > div").addClass("vertical thirdColumn");
+                    setTimeout(function(){
+                        $(".table > div").addClass("full-height");
+                    },20)
+                };
+                function animateFirstDiagonal(){
+                    $(".table").append("<div></div>");
+                    $(".table > div").addClass("incline firstDiagonal");
+                    setTimeout(function(){
+                        $(".table > div").addClass("full-diagonal");
+                    },80)
+                };
+                function animateSecondDiagonal(){
+                    $(".table").append("<div></div>");
+                    $(".table > div").addClass("decline secondDiagonal");
+                    setTimeout(function(){
+                        $(".table > div").addClass("full-diagonal");
+                    },70)
+                };
+                switch(line){
+                    case "firstRow": 
+                        animateFirstDiagonal();
+                        break;
+                    case "secondRow": 
+                        animateSecondRow();
+                        break;
+                    case "thirdRow": 
+                        animatethirdRow();
+                        break;
+                    case "firstColumn": 
+                        animatefirstColumn();
+                        break;
+                    case "secondColumn": 
+                        animatesecondColumn();
+                        break;
+                    case "thirdColumn": 
+                        animatethirdColumn();
+                        break;
+                    case "firstDiagonal": 
+                        animatefirstDiagonal();
+                        break;
+                    case "secondDiagonal": 
+                        animatesecondDiagonal();
+                        break;
+                }
+            };
+            animateWinningLine(winningLine);
+        }
+        
+        function getWinningLine(board){
+            function checkLine(line){
+                if(line[0]!=="E" &&
+                   line[0] == line[1] &&
+                   line[1] == line[2]){
+                    return true;
+                }else {
+                    return false;
+                }
+            }
+            var winningLine;
+            function checkWinningLine(){
+                var allLines = {
+                    firstRow: [board[0],board[1],board[2]],
+                    secondRow: [board[3],board[4],board[5]],
+                    thirdRow: [board[6],board[7],board[8]],
+                    firstColumn: [board[0],board[3],board[6]],
+                    secondColumn: [board[1],board[4],board[7]],
+                    thirdColumn: [board[2],board[5],board[8]],
+                    firstDiaonal: [board[0],board[4],board[8]],
+                    secondDiagonal: [board[2],board[4],board[6]]
+                }
+                if(checkLine(allLines.firstRow)){
+                    winningLine = "firstRow";
+                }else if(checkLine(allLines.secondRow)){
+                    winningLine = "secondRow";
+                }else if(checkLine(allLines.thirdRow)){
+                    winningLine = "thirdRow";
+                }else if(checkLine(allLines.firstColumn)){
+                    winningLine = "firstColumn";
+                }else if(checkLine(allLines.secondColumn)){
+                    winningLine = "secondColumn";
+                }else if(checkLine(allLines.thirdColumn)){
+                    winningLine = "thirdColumn";
+                }else if(checkLine(allLines.firstDiaonal)){
+                    winningLine = "firstDiagonal";
+                }else if(checkLine(allLines.secondDiagonal)){
+                    winningLine = "secondDiagonal";
+                }
+            }
+            checkWinningLine();
+            return winningLine;
+        }
+        if(gameScore == 10){
+            resultAnimation("X",getWinningLine(currentBoard));
+        }else if(gameScore == -10){
+            resultAnimation("O",getWinningLine(currentBoard));
+        }else if(gameScore == 0 && isTerminal(currentBoard)){
+            alert("draw");
+        }
+    }
   
    
   
@@ -231,7 +395,12 @@ $(document).ready(function(){
               if(allSpots[index].hasClass("empty")){
                 allSpots[index].removeClass("empty");
                 allSpots[index].append(""+player);
-              }
+              };
+              var currentBoard = getCurrentBoard();
+              var gameScore = checkResult(currentBoard);
+              displayWinnerIfAny(gameScore,currentBoard);
+              
+              
           },
           humanTurn: function(index,player){
             this.takeTurn(index,humanPlayer=="X"?"X":"O");
@@ -300,22 +469,8 @@ $(document).ready(function(){
     $(".table__cell").click(function(){
         var index = $(this).attr("class").match(/[1-9]/g) - 1;
         pickMove.humanTurn(index);
-        var newBoard = [];
-        for(var i=0; i<allSpots.length; i++){
-          if(allSpots[i].hasClass("empty")){
-              newBoard.push("E");
-          }else{
-              newBoard.push(allSpots[i].html());
-          }
-        }
+        var newBoard = getCurrentBoard();
        makeAiMove(newBoard,"O");
-        
-    })
-    
-    $(document).click(function(){
-        var testBoard = ["O","X","E","E","X","E","O","E","E"];
-        var testPlayerTurn = "X";
-        console.log("testBoard minimax score: "+minimax(testBoard,testPlayerTurn));
         
     })
     
@@ -337,7 +492,7 @@ $(document).ready(function(){
   }) 
   
   
-    })
+})
     
   
    
