@@ -140,7 +140,7 @@ table {
     width: 10px;
     background-color: black;
     transition: height 0.2s ease;
-    height: 5vw;
+    height: 0vw;
     
 }
 
@@ -148,11 +148,19 @@ table {
     right: 0px;
     top: 0;
     transform: rotate(45deg);
+    transform-origin: top right;
+}
+
+.decline {
+    left: 0;
+    top: 0;
+    transform: rotate(-45deg);
+    transform-origin: top left;
 }
 
 .incline.full-diagonal,
 .decline.full-diagonal {
-    height: 48vw;
+    height: 58vw;
     
 }
 

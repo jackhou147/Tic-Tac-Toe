@@ -297,7 +297,7 @@ $(document).ready(function(){
                     $(".table > div").addClass("incline firstDiagonal");
                     setTimeout(function(){
                         $(".table > div").addClass("full-diagonal");
-                    },80)
+                    },20)
                 };
                 function animateSecondDiagonal(){
                     $(".table").append("<div></div>");
@@ -308,7 +308,7 @@ $(document).ready(function(){
                 };
                 switch(line){
                     case "firstRow": 
-                        animateFirstDiagonal();
+                        animateFirstRow();
                         break;
                     case "secondRow": 
                         animateSecondRow();
