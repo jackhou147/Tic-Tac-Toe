@@ -13,6 +13,9 @@ table {
   table-layout: fixed;
 }
 
+td {
+    position: relative;
+}
 .table__cell--border-right {
   border-right: 10px solid #0DA192;
 }
@@ -163,6 +166,53 @@ table {
     height: 58vw;
     
 }
+
+/***svg****/
+svg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    
+}
+
+.svg__path-x-1,
+.svg__path-x-2 {
+    stroke: black;
+    stroke-width: 15;
+    stroke-dasharray: 180.2;
+    stroke-dashoffset: 180.2;
+}
+
+.svg__path-x-1,
+.svg__path-x-2,
+.svg__path-o{
+    animation: path .2s linear forwards;
+}
+
+.svg__path-x-2{
+    animation-delay: .3s;
+}
+
+
+
+.svg__path-o {
+  fill: none;
+  stroke: black;
+  stroke-width: 2;
+  stroke-dasharray: 251.3627;
+  stroke-dashoffset: 251.3627;
+}
+
+
+
+
+@keyframes path{
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+
 
 
 

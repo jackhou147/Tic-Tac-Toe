@@ -16,14 +16,20 @@ $(document).ready(function(){
     var aiPlayer = "O";
     var $restart = $(".restart");
     var choice;
+    var switchable = true;
+    var gameOver = false;
     
     $selectBtnX.click(function(){
-        humanPlayer = "X";
-        aiPlayer = "O";
+       if(switchable){
+            humanPlayer = "X";
+            aiPlayer = "O";
+       }
     });
     $selectBtnO.click(function(){
-        humanPlayer = "O";
-        aiPlayer = "O";
+        if(switchable){
+            humanPlayer = "O";
+            aiPlayer = "X";
+        }
     })
     
   
@@ -225,24 +231,23 @@ $(document).ready(function(){
         }
     
     }
-        
+          /*else{
+              currentBoard.push(allSpots[i].html());
+          }*/
     function getCurrentBoard(){
         var currentBoard = [];
         for(var i=0; i<allSpots.length; i++){
           if(allSpots[i].hasClass("empty")){
               currentBoard.push("E");
-          }else{
-              currentBoard.push(allSpots[i].html());
+          }else if(allSpots[i].hasClass("X")){
+              currentBoard.push("X");
+          }else if(allSpots[i].hasClass("O")){
+              currentBoard.push("O");
           }
         }
         return currentBoard;
     }
     
-    $(document).click(function(){
-        setTimeout(function(){
-            $(".table > div").addClass("full-width");
-        },20)
-    })
     
     
     
@@ -381,37 +386,39 @@ $(document).ready(function(){
         }
         if(gameScore == 10){
             resultAnimation("X",getWinningLine(currentBoard));
+            switchable = true;
+            gameOver = true;
         }else if(gameScore == -10){
             resultAnimation("O",getWinningLine(currentBoard));
+            switchable = true;
+            gameOver = true;
         }else if(gameScore == 0 && isTerminal(currentBoard)){
             alert("draw");
+            switchable = true;
+            gameOver = true;
         }
     }
   
-   
+  function addSvg(spot,player){
+      if(player == "X"){
+          $('<svg width="100%" height="100%" viewbox="0 0 200 200"><path class="svg__path-x-1"d="M50 30 L150 180"/><path class="svg__path-x-2" d="M150 30 L50 180" /></svg>').appendTo(spot);
+      }else {
+          $('<svg width="100%" height="100%" viewbox="0 0 100 100"><path class="svg__path-o" d="M10,50a40,40 0 1,0 80,0a40,40 0 1,0 -80,0"/></svg>').appendTo(spot);
+      }
+  }
   
-  var pickMove = {
-          takeTurn: function(index,player){
-              if(allSpots[index].hasClass("empty")){
-                allSpots[index].removeClass("empty");
-                allSpots[index].append(""+player);
-              };
-              var currentBoard = getCurrentBoard();
-              var gameScore = checkResult(currentBoard);
-              displayWinnerIfAny(gameScore,currentBoard);
-              
-              
-          },
-          humanTurn: function(index,player){
-            this.takeTurn(index,humanPlayer=="X"?"X":"O");
-          },
-          aiTurn: function(index,player){
-            this.takeTurn(index,player);
-          }
-    }
+  function makeMove(index,player){
+      if(allSpots[index].hasClass("empty")){
+          allSpots[index].removeClass("empty");
+      }
+      allSpots[index].addClass(""+player);
+      addSvg(allSpots[index],player);
+      var currentBoard = getCurrentBoard();
+      var gameScore = checkResult(currentBoard);
+      displayWinnerIfAny(gameScore,currentBoard);
+  }
     
   function makeAiMove(board,playerTurn){
-      
         var pickedMove;
         var availableMoves = getAvailableMoves(board);
         var availableBoards = getNewBoards(board,playerTurn,availableMoves);
@@ -461,35 +468,47 @@ $(document).ready(function(){
         }
 
 
-        pickMove.aiTurn(bestIndex,playerTurn);
+        makeMove(bestIndex,playerTurn);
 
 
    }
   
     $(".table__cell").click(function(){
+        switchable = false;
         var index = $(this).attr("class").match(/[1-9]/g) - 1;
-        pickMove.humanTurn(index);
-        var newBoard = getCurrentBoard();
-       makeAiMove(newBoard,"O");
+        alert("gameOver: "+gameOver);
+        if(allSpots[index].hasClass("empty") && !gameOver){
+            allSpots[index].removeClass("empty");
+            makeMove(index,humanPlayer=="X"?"X":"O");
+            var newBoard = getCurrentBoard();
+            setTimeout(function(){
+                makeAiMove(newBoard,aiPlayer=="X"?"X":"O");
+            },550);
+        }
         
     })
     
-  $restart.click(function(){
-    var restart = {
-      resetPlayer: function(){
-        humanPlayer = "X";
-        aiPlayer = "O";
-      },
-      resetBoard:  function(){
-        for(var i=0; i<allSpots.length; i++){
-          allSpots[i].addClass("empty");
-          allSpots[i].empty();
+    
+    $restart.click(function(){
+        function resetPlayer(){
+            humanPlayer = "X";
+            aiPlayer = "O";
         }
-      }
-    }
-    restart.resetPlayer();
-    restart.resetBoard();
-  }) 
+        function resetBoard(){
+            for(var i=0; i<allSpots.length; i++){
+                var thisSpot = allSpots[i];
+                thisSpot.empty();
+                thisSpot.addClass("empty");
+                thisSpot.removeClass("X");
+                thisSpot.removeClass("O");
+                $(".table > div").remove();
+            }
+        }
+        resetPlayer();
+        resetBoard();
+        switchable = true;
+        gameOver = false;
+    })
   
   
 })
