@@ -1,5 +1,5 @@
 body {
-  background-color: #14BDAC;
+  background-color: #57524E;
   overflow: hidden;
 }
 
@@ -18,11 +18,11 @@ td {
     position: relative;
 }
 .table__cell--border-right {
-  border-right: 10px solid #0DA192;
+  border-right: 1px solid grey;
 }
 
 .table__cell--border-bottom {
-  border-bottom: 10px solid #0DA192;
+  border-bottom: 1px solid grey;
 }
 
 .table__cell {
@@ -36,26 +36,30 @@ td {
 /*******\table styling*******/
 
 /********select-player styling*******/
-.select-player {
-    width: 50vw;
-    height: 5vw;
-    position: absolute;
-    left: 25vw;
-    top: 2vw;
-    display: flex;
-    justify-content:space-around;
-    cursor: pointer;
-}
 
 .select-player__X,
 .select-player__O{
-    width: 35%;
+    width: 15%;
     display: flex;
     justify-content:space-between;
     box-sizing: border-box;
     padding: 0 5px;
     background-color: white;
-    border-radius: 10px;
+    position: absolute;
+    height: 100%;
+    cursor: pointer;
+    background: rgb(246,230,180); /* Old browsers */
+    background: -moz-linear-gradient(top, rgba(246,230,180,1) 0%, rgba(237,144,23,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(246,230,180,1) 0%,rgba(237,144,23,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(246,230,180,1) 0%,rgba(237,144,23,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+}
+
+.select-player__X:hover,
+.select-player__O:hover {
+    background: rgb(254,255,255); /* Old browsers */
+    background: -moz-linear-gradient(top, rgba(254,255,255,1) 0%, rgba(210,235,249,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(254,255,255,1) 0%,rgba(210,235,249,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(254,255,255,1) 0%,rgba(210,235,249,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 }
 
 .select-player__X div,
@@ -66,6 +70,14 @@ td {
     
 }
 
+.select-player__X {
+    left: 0;
+}
+
+.select-player__O {
+    right: 0;
+}
+
 .select-player__X span,
 .select-player__O span{
     max-width: 50%;
@@ -74,14 +86,49 @@ td {
 
 /********select-player styling*******/
 
+.controlBtns {
+    position: absolute;
+    bottom: 1vh;
+    width: 180px;
+    height: 30px;
+    left: calc((100% - 180px) / 2);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
 .restart {
-  border: 1px solid red;
-  width: 50%;
-  text-align: center;
-  position: absolute;
-  bottom: 0;
-  left: 25%;
-  cursor: pointer;
+    text-align: center;
+    cursor: pointer;
+    width: 60%;
+    left: 20%;
+    height: 80%;
+    position: absolute;
+    top: 10%;
+    background: rgb(99,182,219); /* Old browsers */
+    background: -moz-linear-gradient(top, rgba(99,182,219,1) 0%, rgba(48,157,207,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(99,182,219,1) 0%,rgba(48,157,207,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(99,182,219,1) 0%,rgba(48,157,207,1) 100%);
+    border-radius: 10px;
+    
+}
+
+.restart:hover {
+    background: rgb(254,252,234); /* Old browsers */
+background: -moz-linear-gradient(top, rgba(254,252,234,1) 0%, rgba(241,218,54,1) 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, rgba(254,252,234,1) 0%,rgba(241,218,54,1) 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, rgba(254,252,234,1) 0%,rgba(241,218,54,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+}
+
+.restart span {
+    display: block;
+    height: 60%;
+    position: relative;
+    top: 10%;
+}
+
+.yourTurn {
+    color: red;
+    font-weight: bold;
 }
 
 
@@ -178,7 +225,7 @@ svg {
 
 .svg__path-x-1,
 .svg__path-x-2 {
-    stroke: black;
+    stroke: rgb(247,228,126);
     stroke-width: 15;
     stroke-dasharray: 180.2;
     stroke-dashoffset: 180.2;
@@ -198,8 +245,8 @@ svg {
 
 .svg__path-o {
   fill: none;
-  stroke: black;
-  stroke-width: 2;
+  stroke: rgb(54,174,228);
+  stroke-width: 8;
   stroke-dasharray: 251.3627;
   stroke-dashoffset: 251.3627;
 }

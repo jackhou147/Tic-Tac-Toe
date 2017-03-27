@@ -469,6 +469,13 @@ $(document).ready(function(){
 
 
         makeMove(bestIndex,playerTurn);
+        if(humanPlayer == "X"){
+            $selectBtnO.removeClass("yourTurn");
+            $selectBtnX.addClass("yourTurn");
+        }else {
+            $selectBtnX.removeClass("yourTurn");
+            $selectBtnO.addClass("yourTurn");
+        }
 
 
    }
@@ -476,10 +483,16 @@ $(document).ready(function(){
     $(".table__cell").click(function(){
         switchable = false;
         var index = $(this).attr("class").match(/[1-9]/g) - 1;
-        alert("gameOver: "+gameOver);
         if(allSpots[index].hasClass("empty") && !gameOver){
             allSpots[index].removeClass("empty");
             makeMove(index,humanPlayer=="X"?"X":"O");
+            if(aiPlayer == "O"){
+                $selectBtnX.removeClass("yourTurn");
+                $selectBtnO.addClass("yourTurn");
+            }else {
+                $selectBtnO.removeClass("yourTurn");
+                $selectBtnX.addClass("yourTurn");
+            }
             var newBoard = getCurrentBoard();
             setTimeout(function(){
                 makeAiMove(newBoard,aiPlayer=="X"?"X":"O");
