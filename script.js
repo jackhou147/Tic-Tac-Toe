@@ -253,7 +253,6 @@ $(document).ready(function(){
     
     function displayWinnerIfAny(gameScore,currentBoard){
         function resultAnimation(winner,winningLine){
-            alert("winner: "+winner);
             function animateWinningLine(line){
                 function animateFirstRow(){
                     $(".table").append("<div></div>");
@@ -283,7 +282,7 @@ $(document).ready(function(){
                         $(".table > div").addClass("full-height");
                     },20)
                 };
-                function animatesecondColumn(){
+                function animateSecondColumn(){
                     $(".table").append("<div></div>");
                     $(".table > div").addClass("vertical secondColumn");
                     setTimeout(function(){
@@ -319,26 +318,27 @@ $(document).ready(function(){
                         animateSecondRow();
                         break;
                     case "thirdRow": 
-                        animatethirdRow();
+                        animateThirdRow();
                         break;
                     case "firstColumn": 
-                        animatefirstColumn();
+                        animateFirstColumn();
                         break;
                     case "secondColumn": 
-                        animatesecondColumn();
+                        animateSecondColumn();
                         break;
                     case "thirdColumn": 
-                        animatethirdColumn();
+                        animateThirdColumn();
                         break;
                     case "firstDiagonal": 
-                        animatefirstDiagonal();
+                        animateFirstDiagonal();
                         break;
                     case "secondDiagonal": 
-                        animatesecondDiagonal();
+                        animateSecondDiagonal();
                         break;
                 }
             };
             animateWinningLine(winningLine);
+            
         }
         
         function getWinningLine(board){
@@ -386,10 +386,16 @@ $(document).ready(function(){
         }
         if(gameScore == 10){
             resultAnimation("X",getWinningLine(currentBoard));
+            setTimeout(function(){
+                alert("winner: X");
+            },1000)
             switchable = true;
             gameOver = true;
         }else if(gameScore == -10){
             resultAnimation("O",getWinningLine(currentBoard));
+            setTimeout(function(){
+                alert("winner: O");
+            },1000)
             switchable = true;
             gameOver = true;
         }else if(gameScore == 0 && isTerminal(currentBoard)){
